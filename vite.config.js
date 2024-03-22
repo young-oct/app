@@ -43,15 +43,12 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "index.html",
-        // Ensure your STL file is included here
-        // For example, if it's in the "models" directory:
-        // 'models/ear.stl': './models/ear.stl'
       },
       output: {
         // Ensure your STL file is included in the output directory
-        // For example, if it's in the "models" directory:
-        // dir: 'dist',
-        // entryFileNames: '[name].[hash].js'
+        // (e.g., if it's in the "public/models" directory)
+        dir: "dist",
+        entryFileNames: "[name].[hash].js",
       },
     },
   },

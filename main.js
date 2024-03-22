@@ -25,7 +25,8 @@ camera.position.setX(-3);
 renderer.render(scene, camera);
 
 loader.load(
-  "/models/ear.stl",
+  "models/ear.stl",
+
   // onLoad callback
   function (geometry) {
     // Create material with red color
