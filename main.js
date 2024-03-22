@@ -1,7 +1,11 @@
 import "./style.css";
 import * as THREE from "three";
+import jeffImg from "/jeff.png";
+// import appStl from "/models/ear.stl";
+import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 
-const jeffTexture = new THREE.TextureLoader().load("jeff.png");
+const jeffTexture = new THREE.TextureLoader().load(jeffImg);
+const loader = new STLLoader();
 
 // Setup
 
@@ -20,7 +24,34 @@ camera.position.setX(-3);
 
 renderer.render(scene, camera);
 
-// Torus
+loader.load(
+  "/models/ear.stl",
+  // onLoad callback
+  function (geometry) {
+    // Create material with red color
+    const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+
+    // Create mesh
+    const mesh = new THREE.Mesh(geometry, material);
+
+    // Adjust scale
+    mesh.scale.set(5, 5, 5);
+
+    // Position the mesh in the top-left corner
+    mesh.position.set(-25, 0, 0);
+
+    // Add mesh to the scene
+    scene.add(mesh);
+  },
+  // onProgress callback
+  function (xhr) {
+    console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+  },
+  // onError callback
+  function (error) {
+    console.error("Error loading STL file:", error);
+  }
+);
 
 const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
 const material = new THREE.MeshStandardMaterial({ color: 0xff6347 });

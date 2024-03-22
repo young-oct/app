@@ -1,44 +1,58 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
 
 export default defineConfig({
-  // Specify the base URL for your application
-  // base: '/',
+  // The base path for your application
+  base: "./",
 
-  // Configure the output directory for your build artifacts
-  // For example, if you want to output files to a 'dist' directory
-  // outDir: 'dist',
+  // Development server configuration
+  server: {
+    // Port number
+    port: 3000,
 
-  // Configure the development server
-  // server: {
-  //   port: 3000, // Specify the port for the development server
-  //   open: true, // Automatically open the browser when the server starts
-  // },
+    // Hostname
+    host: "localhost",
 
-  // Additional configuration options can be added as needed
-
-  // Resolve configuration
-  // resolve: {
-  //   // Create aliases to simplify imports
-  //   alias: {
-  //     // Example alias for the 'models' directory
-  //     "@models": resolve(__dirname, "models"),
-  //   },
-  // },
-  base: "/", // Specify the base URL for your application
-  // Other configuration options...
-
-  resolve: {
-    alias: {
-      // Add alias for the 'textures' directory
-      "@textures": resolve(__dirname, "textures"),
-    },
+    // Enable HTTPS
+    https: false,
   },
 
-  // Define optimization options
-  optimizeDeps: {
-    // Specify which dependencies should be treated as external dependencies
-    // Include dependencies that should not be bundled by Vite
-    include: ["three"],
+  // Production build configuration
+  build: {
+    // Output directory
+    outDir: "dist",
+
+    // Ensure that assets are served relative to the current directory
+    assetsDir: "./",
+
+    // Enable/disable minification
+    minify: true,
+
+    // Enable/disable CSS code splitting
+    cssCodeSplit: true,
+
+    // Configure assets behavior
+    assetsInlineLimit: 4096,
+
+    // Enable/disable chunk splitting
+    chunkSizeWarningLimit: 500,
+
+    // Configure source map generation
+    sourcemap: false,
+
+    // Modify rollup options to include STL file in the output directory
+    rollupOptions: {
+      input: {
+        main: "index.html",
+        // Ensure your STL file is included here
+        // For example, if it's in the "models" directory:
+        // 'models/ear.stl': './models/ear.stl'
+      },
+      output: {
+        // Ensure your STL file is included in the output directory
+        // For example, if it's in the "models" directory:
+        // dir: 'dist',
+        // entryFileNames: '[name].[hash].js'
+      },
+    },
   },
 });
